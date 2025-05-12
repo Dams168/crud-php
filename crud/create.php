@@ -201,7 +201,7 @@
             $cover = $_FILES['cover']['name'];
 
             $path = "../images/" . basename($cover);
-            move_uploaded_file($cover, $path);
+            move_uploaded_file($_FILES['cover']['tmp_name'], $path);
 
             $data = [
                 'title' => $title,
