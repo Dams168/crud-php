@@ -8,16 +8,18 @@ class Session
     public $login_user;
     public function __construct()
     {
-        session_start();
         $this->db = new Database();
+        session_start();
         $this->check_session();
         $this->logout();
     }
     public function check_session()
     {
-
-        if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
-            echo "<script>window.location.href='index.php';</script>";
+        if (!isset($_SESSION['email'])) {
+            if (basename($_SERVER['PHP_SELF']) !== 'index.php') {
+                header("Location: index.php");
+            }
+            // echo "<script>window.location.href='auth/loginForm.php';</script>";
             return;
         }
         $ses_sql = "SELECT * FROM users where email='$_SESSION[email]'";
